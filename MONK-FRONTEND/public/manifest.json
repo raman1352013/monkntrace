@@ -1,0 +1,31 @@
+{
+  "short_name": "Enterprise OOMS",
+  "name": "Enterprise Order & Invoicing System",
+  "description": "Enterprise Order Management, Invoicing, Dispatches, and Team Productivity Dashboard",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "any"
+    }
+  ],
+  "start_url": "/",
+  "background_color": "#ffffff",
+  "theme_color": "#1e293b",
+  "display": "standalone",
+  "orientation": "any",
+  "scope": "/"
+}
