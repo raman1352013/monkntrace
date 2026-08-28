@@ -34,7 +34,14 @@ const lcaProjectSchema = new mongoose.Schema({
     type: Number,
     default: 1
   },
-  
+
+  // Product / Study parameters
+  functionalUnit: {
+    type: String,
+    default: '1 Unit',
+    trim: true
+  },
+
   // Section 1: Materials
   materials: [{
     materialName: String,
@@ -89,7 +96,22 @@ const lcaProjectSchema = new mongoose.Schema({
   }],
 
   submittedAt: Date,
-  approvedAt: Date
+  approvedAt: Date,
+
+  // Section 7: Computed LCIA Environmental Impact Metrics
+  lciaResults: {
+    totalGwpKgCo2e: { type: Number, default: 0 },
+    gwpByStage: {
+      rawMaterials: { type: Number, default: 0 },
+      manufacturing: { type: Number, default: 0 },
+      logistics: { type: Number, default: 0 },
+      packaging: { type: Number, default: 0 },
+      waste: { type: Number, default: 0 }
+    },
+    waterFootprintM3: { type: Number, default: 0 },
+    ppwrRecyclabilityGrade: { type: String, default: 'GRADE_B' },
+    calculatedAt: Date
+  }
 }, {
   timestamps: true
 });

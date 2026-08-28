@@ -76,6 +76,71 @@ async function seedData() {
       }
     }
 
+    // 3. Seed Sample Product & LCA Project Container
+    const Product = require('../models/Product');
+    const LcaProject = require('../models/LcaProject');
+    const { calculateLciaImpacts } = require('../services/lciaCalculator.service');
+
+    let sampleProduct = await Product.findOne({ organizationId: sampleOrg._id });
+    if (!sampleProduct) {
+      sampleProduct = await Product.create({
+        organizationId: sampleOrg._id,
+        name: 'Stainless Steel Water Bottle 750ml',
+        sku: 'SKU-BOT-750',
+        category: 'Consumer Goods / Packaging',
+        weightKg: 0.45,
+        functionalUnit: '1 bottle over 5 years reuse',
+        declaredUnit: '1 unit',
+        productionVolumeAnnual: 50000,
+        status: 'ACTIVE'
+      });
+      logger.info('Seeded sample product: Stainless Steel Water Bottle 750ml');
+    }
+
+    let sampleProject = await LcaProject.findOne({ productId: sampleProduct._id });
+    if (!sampleProject) {
+      const rawData = {
+        title: 'LCA Study - Stainless Steel Water Bottle 750ml',
+        productId: sampleProduct._id,
+        vendorId: sampleOrg._id,
+        systemBoundary: 'CRADLE_TO_GATE',
+        functionalUnit: '1 bottle over 5 years reuse',
+        status: 'SUBMITTED',
+        currentStep: 7,
+        materials: [
+          { materialName: 'Stainless Steel 304', quantity: 0.38, unit: 'kg', recycledContentPct: 35, supplierName: 'Jindal Stainless Ltd', originCountry: 'India' },
+          { materialName: 'PP Plastic Lid', quantity: 0.05, unit: 'kg', recycledContentPct: 20, supplierName: 'Polymer Corp', originCountry: 'India' },
+          { materialName: 'Silicone Seal Ring', quantity: 0.02, unit: 'kg', recycledContentPct: 0, supplierName: 'Silicone Tech', originCountry: 'India' }
+        ],
+        manufacturing: {
+          electricityKwh: 4.5,
+          electricitySource: 'GRID_MIX',
+          naturalGasM3: 0.2,
+          dieselLiters: 0.1,
+          waterConsumptionLiters: 15,
+          processWastewaterLiters: 12
+        },
+        transportation: [
+          { legType: 'RAW_MATERIAL_INBOUND', mode: 'TRUCK_DIESEL', distanceKm: 450, weightTons: 0.00045 }
+        ],
+        packaging: [
+          { packagingType: 'CARDBOARD_BOX', weightGramsPerUnit: 45, recycledContentPct: 80, disposalRoute: 'RECYCLED' }
+        ],
+        wasteEmissions: [
+          { wasteType: 'SCRAP_METAL', quantityKg: 0.03, treatmentMethod: 'RECYCLING', directCo2eKg: 0.05 }
+        ]
+      };
+
+      const computedLcia = calculateLciaImpacts(rawData);
+
+      sampleProject = await LcaProject.create({
+        ...rawData,
+        lciaResults: computedLcia,
+        submittedAt: new Date()
+      });
+      logger.info('Seeded sample LCA project: Stainless Steel Water Bottle');
+    }
+
     logger.info('Data Seeding completed successfully!');
     if (require.main === module) {
       process.exit(0);

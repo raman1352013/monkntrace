@@ -330,14 +330,12 @@ function UsersList() {
       if (selectedStatus) params.status = selectedStatus === "Active" ? "ACTIVE" : "INACTIVE";
       if (selectedRole) {
         const typeMap: Record<string, string> = {
-          "Admin": "SUPER_ADMIN",
-          "MD": "MD",
-          "Sales Executive": "SALES_EXECUTIVE",
-          "Operations": "OPERATIONS",
-          "Accounts": "ACCOUNTS",
-          "Logistics": "LOGISTICS_TEAM",
+          "Super Admin": "SUPER_ADMIN",
+          "Admin":       "ADMIN",
+          "Reviewer":    "REVIEWER",
+          "Vendor":      "VENDOR",
         };
-        params.role = typeMap[selectedRole] || selectedRole;
+        params.userType = typeMap[selectedRole] || selectedRole;
       }
       if (search) params.search = search;
       const res = await api.get("/users", { params });

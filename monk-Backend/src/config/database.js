@@ -4,11 +4,19 @@ const logger = require('./logger');
 
 const connectDB = async () => {
   try {
-    const conn = await mongoose.connect(config.database.uri, {
-      serverSelectionTimeoutMS: 30000,  // 30s to find a server
-      connectTimeoutMS: 30000,          // 30s for initial connection
-      socketTimeoutMS: 45000,           // 45s for socket timeout
-    });
+    let conn;
+    try {
+      conn = await mongoose.connect(config.database.uri, {
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 5000,
+      });
+    } catch (primaryErr) {
+      logger.warn(`Primary MongoDB connection failed (${primaryErr.message}). Attempting fallback to local MongoDB...`);
+      conn = await mongoose.connect('mongodb://127.0.0.1:27017/monktrace', {
+        serverSelectionTimeoutMS: 5000,
+        connectTimeoutMS: 5000,
+      });
+    }
 
     logger.info('MongoDB connected successfully', {
       host: conn.connection.host,
@@ -31,6 +39,7 @@ const connectDB = async () => {
 
   } catch (error) {
     logger.error('MongoDB connection failed', { message: error.message });
+    logger.error('Note: Please ensure local MongoDB is running OR your IP address is whitelisted in MongoDB Atlas.');
     process.exit(1);
   }
 };

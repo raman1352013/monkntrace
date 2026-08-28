@@ -102,7 +102,7 @@ export function TopNav({ onOpenProfile }: { onOpenProfile: () => void }) {
   };
 
   return (
-    <header className="h-16 bg-surface border-b border-wireframe-border flex items-center justify-between px-gutter sticky top-0 z-20">
+    <header style={{ height: 56, background: 'rgba(8,14,24,0.95)', borderBottom: '1px solid rgba(255,255,255,0.07)', backdropFilter: 'blur(12px)', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 28px', position: 'sticky', top: 0, zIndex: 20 }}>
       <div className="flex items-center gap-2 text-secondary">
         <span className="font-label-md text-label-md">Home</span>
         <span className="material-symbols-outlined text-[16px]">chevron_right</span>

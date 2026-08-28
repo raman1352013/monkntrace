@@ -2,7 +2,8 @@ import { useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "@/lib/api";
-import { Leaf, Plus, ArrowRight, ShieldCheck, Clock, FileEdit, AlertCircle } from "lucide-react";
+import { Leaf, Plus, ArrowRight, ShieldCheck, Clock, FileEdit, AlertCircle, QrCode, Download } from "lucide-react";
+import { DigitalProductPassportModal } from "@/components/dpp/DigitalProductPassportModal";
 
 export const Route = createFileRoute("/_layout/projects")({
   head: () => ({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/_layout/projects")({
 function LcaProjectsPage() {
   const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedDppProject, setSelectedDppProject] = useState<any>(null);
   const [formData, setFormData] = useState({
     title: "",
     productName: "",
@@ -148,11 +150,18 @@ function LcaProjectsPage() {
                   </div>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={() => setSelectedDppProject(project)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 bg-cyan-900/40 hover:bg-cyan-800/60 text-cyan-300 border border-cyan-500/30 font-semibold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
+                  >
+                    <QrCode className="w-3.5 h-3.5" />
+                    DPP Passport
+                  </button>
                   <Link
                     to="/wizard"
                     search={{ projectId: project._id }}
-                    className="flex items-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-sm transition-all"
+                    className="flex items-center gap-1.5 px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs rounded-xl shadow-xs transition-all"
                   >
                     Open Data Questionnaire
                     <ArrowRight className="w-3.5 h-3.5" />
@@ -163,6 +172,13 @@ function LcaProjectsPage() {
           </div>
         )}
       </div>
+
+      {/* DPP Passport Modal */}
+      <DigitalProductPassportModal
+        project={selectedDppProject}
+        isOpen={!!selectedDppProject}
+        onClose={() => setSelectedDppProject(null)}
+      />
 
       {/* Modal */}
       {isModalOpen && (

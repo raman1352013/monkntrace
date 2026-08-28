@@ -1,6 +1,7 @@
 const LcaProject = require('../../models/LcaProject');
 const Product = require('../../models/Product');
 const Organization = require('../../models/Organization');
+const { calculateLciaImpacts } = require('../../services/lciaCalculator.service');
 
 const normalizeSystemBoundary = (val) => {
   if (!val) return 'CRADLE_TO_GATE';
@@ -42,13 +43,17 @@ exports.createLcaProject = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Title and productId are required' });
     }
 
+    const initialImpacts = calculateLciaImpacts(req.body);
+
     const project = await LcaProject.create({
       title,
       productId,
       vendorId: targetVendorId,
       systemBoundary: normalizeSystemBoundary(systemBoundary),
+      functionalUnit: req.body.functionalUnit || '1 Unit',
       status: 'DRAFT',
-      currentStep: 1
+      currentStep: 1,
+      lciaResults: initialImpacts
     });
 
     res.status(201).json({ success: true, data: project });
@@ -62,7 +67,15 @@ exports.createLcaProject = async (req, res) => {
 exports.getLcaProjects = async (req, res) => {
   try {
     const filter = {};
-    if (req.query.vendorId) filter.vendorId = req.query.vendorId;
+
+    // Vendors can only see their own organisation's projects
+    if (req.user?.userType === 'VENDOR' && req.user?.organizationId) {
+      filter.vendorId = req.user.organizationId;
+    } else {
+      // Admin / Reviewer: allow explicit vendorId filter from query
+      if (req.query.vendorId) filter.vendorId = req.query.vendorId;
+    }
+
     if (req.query.status) filter.status = req.query.status;
 
     const projects = await LcaProject.find(filter)
@@ -99,6 +112,11 @@ exports.getLcaProjectById = async (req, res) => {
 exports.updateLcaProject = async (req, res) => {
   try {
     const { id } = req.params;
+    const existing = await LcaProject.findById(id);
+    if (!existing) {
+      return res.status(404).json({ success: false, message: 'LCA Project not found' });
+    }
+
     const updateData = { ...req.body };
 
     if (updateData.systemBoundary) {
@@ -110,13 +128,13 @@ exports.updateLcaProject = async (req, res) => {
       updateData.status = 'UNDER_REVIEW';
     }
 
+    // Merge existing and updateData to compute fresh LCIA impacts
+    const mergedDoc = { ...existing.toObject(), ...updateData };
+    updateData.lciaResults = calculateLciaImpacts(mergedDoc);
+
     const project = await LcaProject.findByIdAndUpdate(id, updateData, { new: true, runValidators: false })
       .populate('productId')
       .populate('vendorId');
-
-    if (!project) {
-      return res.status(404).json({ success: false, message: 'LCA Project not found' });
-    }
 
     res.status(200).json({ success: true, data: project });
   } catch (error) {
@@ -148,3 +166,24 @@ exports.submitLcaProject = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+// Export LCA PDF Report
+exports.exportPdfReport = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const project = await LcaProject.findById(id)
+      .populate('productId')
+      .populate('vendorId');
+
+    if (!project) {
+      return res.status(404).json({ success: false, message: 'LCA Project not found' });
+    }
+
+    const { generateLcaPdfReport } = require('../../services/pdfReport.service');
+    generateLcaPdfReport(project, res);
+  } catch (error) {
+    console.error('exportPdfReport Error:', error);
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+

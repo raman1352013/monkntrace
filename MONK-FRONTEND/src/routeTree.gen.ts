@@ -17,6 +17,8 @@ import { Route as LayoutWizardRouteImport } from './routes/_layout/wizard'
 import { Route as LayoutVendorsRouteImport } from './routes/_layout/vendors'
 import { Route as LayoutReviewsRouteImport } from './routes/_layout/reviews'
 import { Route as LayoutProjectsRouteImport } from './routes/_layout/projects'
+import { Route as LayoutPpwrRouteImport } from './routes/_layout/ppwr'
+import { Route as LayoutEpdRouteImport } from './routes/_layout/epd'
 import { Route as LayoutUsersIndexRouteImport } from './routes/_layout/users/index'
 import { Route as LayoutRolesIndexRouteImport } from './routes/_layout/roles/index'
 import { Route as LayoutUsersNewRouteImport } from './routes/_layout/users/new'
@@ -60,6 +62,16 @@ const LayoutProjectsRoute = LayoutProjectsRouteImport.update({
   path: '/projects',
   getParentRoute: () => LayoutRoute,
 } as any)
+const LayoutPpwrRoute = LayoutPpwrRouteImport.update({
+  id: '/ppwr',
+  path: '/ppwr',
+  getParentRoute: () => LayoutRoute,
+} as any)
+const LayoutEpdRoute = LayoutEpdRouteImport.update({
+  id: '/epd',
+  path: '/epd',
+  getParentRoute: () => LayoutRoute,
+} as any)
 const LayoutUsersIndexRoute = LayoutUsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
@@ -80,6 +92,8 @@ export interface FileRoutesByFullPath {
   '/': typeof LayoutIndexRoute
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/epd': typeof LayoutEpdRoute
+  '/ppwr': typeof LayoutPpwrRoute
   '/projects': typeof LayoutProjectsRoute
   '/reviews': typeof LayoutReviewsRoute
   '/vendors': typeof LayoutVendorsRoute
@@ -91,6 +105,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/epd': typeof LayoutEpdRoute
+  '/ppwr': typeof LayoutPpwrRoute
   '/projects': typeof LayoutProjectsRoute
   '/reviews': typeof LayoutReviewsRoute
   '/vendors': typeof LayoutVendorsRoute
@@ -105,6 +121,8 @@ export interface FileRoutesById {
   '/_layout': typeof LayoutRouteWithChildren
   '/login': typeof LoginRoute
   '/register': typeof RegisterRoute
+  '/_layout/epd': typeof LayoutEpdRoute
+  '/_layout/ppwr': typeof LayoutPpwrRoute
   '/_layout/projects': typeof LayoutProjectsRoute
   '/_layout/reviews': typeof LayoutReviewsRoute
   '/_layout/vendors': typeof LayoutVendorsRoute
@@ -120,6 +138,8 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/register'
+    | '/epd'
+    | '/ppwr'
     | '/projects'
     | '/reviews'
     | '/vendors'
@@ -131,6 +151,8 @@ export interface FileRouteTypes {
   to:
     | '/login'
     | '/register'
+    | '/epd'
+    | '/ppwr'
     | '/projects'
     | '/reviews'
     | '/vendors'
@@ -144,6 +166,8 @@ export interface FileRouteTypes {
     | '/_layout'
     | '/login'
     | '/register'
+    | '/_layout/epd'
+    | '/_layout/ppwr'
     | '/_layout/projects'
     | '/_layout/reviews'
     | '/_layout/vendors'
@@ -218,6 +242,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LayoutProjectsRouteImport
       parentRoute: typeof LayoutRoute
     }
+    '/_layout/ppwr': {
+      id: '/_layout/ppwr'
+      path: '/ppwr'
+      fullPath: '/ppwr'
+      preLoaderRoute: typeof LayoutPpwrRouteImport
+      parentRoute: typeof LayoutRoute
+    }
+    '/_layout/epd': {
+      id: '/_layout/epd'
+      path: '/epd'
+      fullPath: '/epd'
+      preLoaderRoute: typeof LayoutEpdRouteImport
+      parentRoute: typeof LayoutRoute
+    }
     '/_layout/users/': {
       id: '/_layout/users/'
       path: '/users'
@@ -243,6 +281,8 @@ declare module '@tanstack/react-router' {
 }
 
 interface LayoutRouteChildren {
+  LayoutEpdRoute: typeof LayoutEpdRoute
+  LayoutPpwrRoute: typeof LayoutPpwrRoute
   LayoutProjectsRoute: typeof LayoutProjectsRoute
   LayoutReviewsRoute: typeof LayoutReviewsRoute
   LayoutVendorsRoute: typeof LayoutVendorsRoute
@@ -254,6 +294,8 @@ interface LayoutRouteChildren {
 }
 
 const LayoutRouteChildren: LayoutRouteChildren = {
+  LayoutEpdRoute: LayoutEpdRoute,
+  LayoutPpwrRoute: LayoutPpwrRoute,
   LayoutProjectsRoute: LayoutProjectsRoute,
   LayoutReviewsRoute: LayoutReviewsRoute,
   LayoutVendorsRoute: LayoutVendorsRoute,
