@@ -16,7 +16,7 @@ dist-ssr
 .nitro
 # Env files
 .env
-.env*.local
+.env.*
 *.local
 
 
