@@ -26,7 +26,17 @@ try {
   
   // Configure CORS with allowed origins
   app.use(cors({
-    origin: config.cors.origins,
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        config.cors.origins.includes(origin) ||
+        origin.endsWith('.vercel.app') ||
+        config.env === 'development'
+      ) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS origin not allowed: ${origin}`));
+    },
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Correlation-ID']
