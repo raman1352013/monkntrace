@@ -7,8 +7,8 @@ const connectDB = async () => {
     let conn;
     try {
       conn = await mongoose.connect(config.database.uri, {
-        serverSelectionTimeoutMS: 5000,
-        connectTimeoutMS: 5000,
+        serverSelectionTimeoutMS: 15000,
+        connectTimeoutMS: 15000,
       });
     } catch (primaryErr) {
       logger.warn(`Primary MongoDB connection failed (${primaryErr.message}). Attempting fallback to local MongoDB...`);
