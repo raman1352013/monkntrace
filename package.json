@@ -1,0 +1,10 @@
+{
+  "name": "monkntrace-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "install:backend": "cd monk-Backend && npm install",
+    "build": "cd monk-Backend && npm install",
+    "start": "cd monk-Backend && npm start"
+  }
+}

@@ -115,8 +115,14 @@ try {
   logger.info('Swagger documentation available at /api-docs');
 
   // Sentry Error Handler
-  const Sentry = require('@sentry/node');
-  Sentry.setupExpressErrorHandler(app);
+  try {
+    const Sentry = require('./instrument');
+    if (Sentry && typeof Sentry.setupExpressErrorHandler === 'function') {
+      Sentry.setupExpressErrorHandler(app);
+    }
+  } catch (sentryErr) {
+    logger.warn('Sentry error handler skipped', { error: sentryErr.message });
+  }
 
   // Error handling middleware
   const { errorHandler, notFoundHandler } = require('./middleware/error.middleware');
