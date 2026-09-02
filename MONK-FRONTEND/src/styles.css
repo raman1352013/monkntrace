@@ -196,6 +196,26 @@
     color: var(--color-foreground);
     font-family: "Inter", system-ui, sans-serif;
   }
+
+  /* Fix: Ensure all form inputs always show text in foreground color */
+  input,
+  textarea,
+  select {
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--color-muted-foreground);
+    opacity: 1;
+  }
+
+  /* Fix: Dropdown options must have readable colors */
+  option {
+    color: var(--on-surface, #131b2e);
+    background-color: var(--surface-container-lowest, #ffffff);
+  }
 }
 
 @utility font-headline-lg { font-weight: 600; letter-spacing: -0.02em; }

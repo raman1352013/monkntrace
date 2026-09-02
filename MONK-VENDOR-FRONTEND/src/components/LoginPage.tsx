@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import api from '../lib/api';
-import { Leaf, Lock, Mail, ShieldCheck, Sparkles, Eye, EyeOff } from 'lucide-react';
+import { Leaf, Lock, Mail, ShieldCheck, Eye, EyeOff } from 'lucide-react';
 
 interface LoginPageProps {
   onLoginSuccess: (user: any, token: string) => void;
@@ -8,8 +8,8 @@ interface LoginPageProps {
 }
 
 export function LoginPage({ onLoginSuccess, onNavigateToRegister }: LoginPageProps) {
-  const [email, setEmail] = useState('vendor@company.com');
-  const [password, setPassword] = useState('Vendor@123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -109,13 +109,6 @@ export function LoginPage({ onLoginSuccess, onNavigateToRegister }: LoginPagePro
           </button>
         </form>
 
-        <div className="p-3 bg-slate-950/60 rounded-xl border border-slate-800 text-[11px] text-slate-400 space-y-1">
-          <div className="font-semibold text-emerald-400 flex items-center gap-1">
-            <Sparkles className="w-3.5 h-3.5" /> Sample Vendor Credentials:
-          </div>
-          <div>Email: <code className="text-white">vendor@company.com</code></div>
-          <div>Password: <code className="text-white">Vendor@123</code></div>
-        </div>
 
         <div className="text-center text-xs text-slate-400 pt-2 border-t border-slate-800">
           New Supplier Company?{' '}

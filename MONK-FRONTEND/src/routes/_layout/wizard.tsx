@@ -259,19 +259,19 @@ function LcaWizardPage() {
                       placeholder="Material (e.g. Stainless Steel 304)"
                       value={mat.materialName}
                       onChange={(e) => { const copy = [...materials]; copy[idx].materialName = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <input
                       type="number"
                       placeholder="Quantity"
                       value={mat.quantity}
                       onChange={(e) => { const copy = [...materials]; copy[idx].quantity = Number(e.target.value); setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <select
                       value={mat.unit}
                       onChange={(e) => { const copy = [...materials]; copy[idx].unit = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
                     >
                       <option value="kg">kg</option>
                       <option value="g">g</option>
@@ -282,14 +282,14 @@ function LcaWizardPage() {
                       placeholder="Recycled %"
                       value={mat.recycledContentPct}
                       onChange={(e) => { const copy = [...materials]; copy[idx].recycledContentPct = Number(e.target.value); setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <input
                       type="text"
                       placeholder="Supplier / Origin"
                       value={mat.supplierName}
                       onChange={(e) => { const copy = [...materials]; copy[idx].supplierName = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <button
                       onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
@@ -318,7 +318,7 @@ function LcaWizardPage() {
                   type="number"
                   value={manufacturing.electricityKwh}
                   onChange={(e) => setManufacturing({ ...manufacturing, electricityKwh: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm text-foreground"
                 />
               </div>
               <div>
@@ -326,7 +326,7 @@ function LcaWizardPage() {
                 <select
                   value={manufacturing.electricitySource}
                   onChange={(e) => setManufacturing({ ...manufacturing, electricitySource: e.target.value })}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm text-foreground"
                 >
                   <option value="GRID_MIX">National Grid Mix</option>
                   <option value="SOLAR_ON_SITE">Solar On-Site</option>
@@ -339,7 +339,7 @@ function LcaWizardPage() {
                   type="number"
                   value={manufacturing.naturalGasM3}
                   onChange={(e) => setManufacturing({ ...manufacturing, naturalGasM3: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm text-foreground"
                 />
               </div>
               <div>
@@ -348,7 +348,7 @@ function LcaWizardPage() {
                   type="number"
                   value={manufacturing.waterConsumptionLiters}
                   onChange={(e) => setManufacturing({ ...manufacturing, waterConsumptionLiters: Number(e.target.value) })}
-                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm"
+                  className="w-full px-3 py-2 border rounded-lg bg-background text-sm text-foreground"
                 />
               </div>
             </div>
@@ -383,7 +383,7 @@ function LcaWizardPage() {
                         <select
                           value={leg.legType}
                           onChange={(e) => { const copy = [...transportation]; copy[idx].legType = e.target.value; setTransportation(copy); }}
-                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                          className="w-full px-3 py-2 border rounded-lg bg-background text-foreground"
                         >
                           <option value="RAW_MATERIAL_INBOUND">Raw Material Inbound</option>
                           <option value="FINISHED_GOODS_OUTBOUND">Outbound Finished Goods</option>
@@ -395,7 +395,7 @@ function LcaWizardPage() {
                         <select
                           value={leg.mode}
                           onChange={(e) => { const copy = [...transportation]; copy[idx].mode = e.target.value; setTransportation(copy); }}
-                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                          className="w-full px-3 py-2 border rounded-lg bg-background text-foreground"
                         >
                           <option value="TRUCK_DIESEL">Truck (Diesel)</option>
                           <option value="CONTAINER_SHIP">Container Ship</option>
@@ -411,7 +411,7 @@ function LcaWizardPage() {
                           placeholder="Distance (km)"
                           value={leg.distanceKm}
                           onChange={(e) => { const copy = [...transportation]; copy[idx].distanceKm = Number(e.target.value); setTransportation(copy); }}
-                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                          className="w-full px-3 py-2 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                         />
                       </div>
 
@@ -422,7 +422,7 @@ function LcaWizardPage() {
                           placeholder="Weight (Tons)"
                           value={leg.weightTons}
                           onChange={(e) => { const copy = [...transportation]; copy[idx].weightTons = Number(e.target.value); setTransportation(copy); }}
-                          className="w-full px-3 py-2 border rounded-lg bg-background"
+                          className="w-full px-3 py-2 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                         />
                       </div>
 
@@ -469,26 +469,26 @@ function LcaWizardPage() {
                       placeholder="Packaging Type (Cardboard/Plastic)"
                       value={pack.packagingType}
                       onChange={(e) => { const copy = [...packaging]; copy[idx].packagingType = e.target.value; setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <input
                       type="number"
                       placeholder="Weight (grams/unit)"
                       value={pack.weightGramsPerUnit}
                       onChange={(e) => { const copy = [...packaging]; copy[idx].weightGramsPerUnit = Number(e.target.value); setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <input
                       type="number"
                       placeholder="Recycled %"
                       value={pack.recycledContentPct}
                       onChange={(e) => { const copy = [...packaging]; copy[idx].recycledContentPct = Number(e.target.value); setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <select
                       value={pack.disposalRoute}
                       onChange={(e) => { const copy = [...packaging]; copy[idx].disposalRoute = e.target.value; setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
                     >
                       <option value="RECYCLED">Recycled</option>
                       <option value="LANDFILL">Landfill</option>
@@ -531,19 +531,19 @@ function LcaWizardPage() {
                       placeholder="Waste Type"
                       value={w.wasteType}
                       onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].wasteType = e.target.value; setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <input
                       type="number"
                       placeholder="Quantity (kg)"
                       value={w.quantityKg}
                       onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].quantityKg = Number(e.target.value); setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
                     />
                     <select
                       value={w.treatmentMethod}
                       onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].treatmentMethod = e.target.value; setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background"
+                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
                     >
                       <option value="RECYCLING">Recycling</option>
                       <option value="LANDFILL">Landfill</option>
