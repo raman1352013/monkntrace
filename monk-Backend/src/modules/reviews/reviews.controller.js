@@ -4,9 +4,17 @@ const LcaProject = require('../../models/LcaProject');
 // Post review comment on a project field
 exports.createComment = async (req, res) => {
   try {
-    const { projectId, reviewerId, section, fieldKey, comment } = req.body;
+    const { projectId, section, fieldKey, comment } = req.body;
+
+    // reviewerId comes from authenticated user via JWT middleware
+    const reviewerId = req.user?.userId || req.user?.id || req.user?._id;
+
     if (!projectId || !comment) {
       return res.status(400).json({ success: false, message: 'projectId and comment are required' });
+    }
+
+    if (!reviewerId) {
+      return res.status(401).json({ success: false, message: 'Unauthorized: reviewer identity could not be determined' });
     }
 
     const reviewComment = await ReviewComment.create({
