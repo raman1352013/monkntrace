@@ -169,7 +169,7 @@ function CreateUser() {
                         {...register("role")}
                       />
                       <div>
-                        <span className="block font-medium text-sm">{roleOption}</span>
+                        <span className="block font-semibold text-sm text-foreground">{roleOption}</span>
                       </div>
                     </label>
                   ))}
