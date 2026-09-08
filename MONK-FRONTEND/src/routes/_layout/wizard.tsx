@@ -253,50 +253,69 @@ function LcaWizardPage() {
             ) : (
               <div className="space-y-3">
                 {materials.map((mat, idx) => (
-                  <div key={idx} className="grid grid-cols-1 md:grid-cols-6 gap-3 p-3 bg-muted/30 rounded-xl border border-wireframe-border items-center text-xs">
-                    <input
-                      type="text"
-                      placeholder="Material (e.g. Stainless Steel 304)"
-                      value={mat.materialName}
-                      onChange={(e) => { const copy = [...materials]; copy[idx].materialName = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Quantity"
-                      value={mat.quantity}
-                      onChange={(e) => { const copy = [...materials]; copy[idx].quantity = Number(e.target.value); setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <select
-                      value={mat.unit}
-                      onChange={(e) => { const copy = [...materials]; copy[idx].unit = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
-                    >
-                      <option value="kg">kg</option>
-                      <option value="g">g</option>
-                      <option value="tonne">tonne</option>
-                    </select>
-                    <input
-                      type="number"
-                      placeholder="Recycled %"
-                      value={mat.recycledContentPct}
-                      onChange={(e) => { const copy = [...materials]; copy[idx].recycledContentPct = Number(e.target.value); setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <input
-                      type="text"
-                      placeholder="Supplier / Origin"
-                      value={mat.supplierName}
-                      onChange={(e) => { const copy = [...materials]; copy[idx].supplierName = e.target.value; setMaterials(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <button
-                      onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
-                      className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg justify-self-end"
-                    >
-                      <Trash className="w-4 h-4" />
-                    </button>
+                  <div key={idx} className="p-3 bg-muted/30 rounded-xl border border-wireframe-border text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-6 gap-3 items-end">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Material Name</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Stainless Steel 304"
+                          value={mat.materialName}
+                          onChange={(e) => { const copy = [...materials]; copy[idx].materialName = e.target.value; setMaterials(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Quantity</label>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={mat.quantity}
+                          onChange={(e) => { const copy = [...materials]; copy[idx].quantity = Number(e.target.value); setMaterials(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Unit</label>
+                        <select
+                          value={mat.unit}
+                          onChange={(e) => { const copy = [...materials]; copy[idx].unit = e.target.value; setMaterials(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground"
+                        >
+                          <option value="kg">kg</option>
+                          <option value="g">g</option>
+                          <option value="tonne">tonne</option>
+                        </select>
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Recycled Content %</label>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={mat.recycledContentPct}
+                          onChange={(e) => { const copy = [...materials]; copy[idx].recycledContentPct = Number(e.target.value); setMaterials(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Supplier / Origin Country</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Tata Steel / India"
+                          value={mat.supplierName}
+                          onChange={(e) => { const copy = [...materials]; copy[idx].supplierName = e.target.value; setMaterials(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <button
+                          onClick={() => setMaterials(materials.filter((_, i) => i !== idx))}
+                          className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg"
+                        >
+                          <Trash className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -463,40 +482,56 @@ function LcaWizardPage() {
             ) : (
               <div className="space-y-3">
                 {packaging.map((pack, idx) => (
-                  <div key={idx} className="grid grid-cols-1 md:grid-cols-5 gap-3 p-3 bg-muted/30 rounded-xl border border-wireframe-border items-center text-xs">
-                    <input
-                      type="text"
-                      placeholder="Packaging Type (Cardboard/Plastic)"
-                      value={pack.packagingType}
-                      onChange={(e) => { const copy = [...packaging]; copy[idx].packagingType = e.target.value; setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Weight (grams/unit)"
-                      value={pack.weightGramsPerUnit}
-                      onChange={(e) => { const copy = [...packaging]; copy[idx].weightGramsPerUnit = Number(e.target.value); setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Recycled %"
-                      value={pack.recycledContentPct}
-                      onChange={(e) => { const copy = [...packaging]; copy[idx].recycledContentPct = Number(e.target.value); setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <select
-                      value={pack.disposalRoute}
-                      onChange={(e) => { const copy = [...packaging]; copy[idx].disposalRoute = e.target.value; setPackaging(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
-                    >
-                      <option value="RECYCLED">Recycled</option>
-                      <option value="LANDFILL">Landfill</option>
-                      <option value="INCINERATION">Incineration</option>
-                    </select>
-                    <button onClick={() => setPackaging(packaging.filter((_, i) => i !== idx))} className="p-1.5 text-red-500 justify-self-end">
-                      <Trash className="w-4 h-4" />
-                    </button>
+                  <div key={idx} className="p-3 bg-muted/30 rounded-xl border border-wireframe-border text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-3 items-end">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Packaging Type</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Cardboard Box"
+                          value={pack.packagingType}
+                          onChange={(e) => { const copy = [...packaging]; copy[idx].packagingType = e.target.value; setPackaging(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Weight (grams/unit)</label>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={pack.weightGramsPerUnit}
+                          onChange={(e) => { const copy = [...packaging]; copy[idx].weightGramsPerUnit = Number(e.target.value); setPackaging(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Recycled Content %</label>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={pack.recycledContentPct}
+                          onChange={(e) => { const copy = [...packaging]; copy[idx].recycledContentPct = Number(e.target.value); setPackaging(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Disposal Route</label>
+                        <select
+                          value={pack.disposalRoute}
+                          onChange={(e) => { const copy = [...packaging]; copy[idx].disposalRoute = e.target.value; setPackaging(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground"
+                        >
+                          <option value="RECYCLED">Recycled</option>
+                          <option value="LANDFILL">Landfill</option>
+                          <option value="INCINERATION">Incineration</option>
+                        </select>
+                      </div>
+                      <div className="flex justify-end">
+                        <button onClick={() => setPackaging(packaging.filter((_, i) => i !== idx))} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg">
+                          <Trash className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -525,33 +560,46 @@ function LcaWizardPage() {
             ) : (
               <div className="space-y-3">
                 {wasteEmissions.map((w, idx) => (
-                  <div key={idx} className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-muted/30 rounded-xl border border-wireframe-border items-center text-xs">
-                    <input
-                      type="text"
-                      placeholder="Waste Type"
-                      value={w.wasteType}
-                      onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].wasteType = e.target.value; setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <input
-                      type="number"
-                      placeholder="Quantity (kg)"
-                      value={w.quantityKg}
-                      onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].quantityKg = Number(e.target.value); setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
-                    />
-                    <select
-                      value={w.treatmentMethod}
-                      onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].treatmentMethod = e.target.value; setWasteEmissions(copy); }}
-                      className="px-3 py-1.5 border rounded-lg bg-background text-foreground"
-                    >
-                      <option value="RECYCLING">Recycling</option>
-                      <option value="LANDFILL">Landfill</option>
-                      <option value="INCINERATION_WITH_ENERGY_RECOVERY">Incineration with Energy Recovery</option>
-                    </select>
-                    <button onClick={() => setWasteEmissions(wasteEmissions.filter((_, i) => i !== idx))} className="p-1.5 text-red-500 justify-self-end">
-                      <Trash className="w-4 h-4" />
-                    </button>
+                  <div key={idx} className="p-3 bg-muted/30 rounded-xl border border-wireframe-border text-xs">
+                    <div className="grid grid-cols-1 md:grid-cols-4 gap-3 items-end">
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Waste Type</label>
+                        <input
+                          type="text"
+                          placeholder="e.g. Scrap Metal"
+                          value={w.wasteType}
+                          onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].wasteType = e.target.value; setWasteEmissions(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Quantity (kg)</label>
+                        <input
+                          type="number"
+                          placeholder="0"
+                          value={w.quantityKg}
+                          onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].quantityKg = Number(e.target.value); setWasteEmissions(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground placeholder:text-muted-foreground"
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label className="text-[11px] font-bold text-muted-foreground uppercase">Treatment Method</label>
+                        <select
+                          value={w.treatmentMethod}
+                          onChange={(e) => { const copy = [...wasteEmissions]; copy[idx].treatmentMethod = e.target.value; setWasteEmissions(copy); }}
+                          className="w-full px-3 py-1.5 border rounded-lg bg-background text-foreground"
+                        >
+                          <option value="RECYCLING">Recycling</option>
+                          <option value="LANDFILL">Landfill</option>
+                          <option value="INCINERATION_WITH_ENERGY_RECOVERY">Incineration with Energy Recovery</option>
+                        </select>
+                      </div>
+                      <div className="flex justify-end">
+                        <button onClick={() => setWasteEmissions(wasteEmissions.filter((_, i) => i !== idx))} className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg">
+                          <Trash className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
